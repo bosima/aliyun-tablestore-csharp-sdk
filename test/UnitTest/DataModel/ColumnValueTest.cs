@@ -10,22 +10,9 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Web;
-using System.Net;
-using System.Net.Http;
-using System.IO;
 
 using NUnit.Framework;
-
-using Aliyun.OTS;
 using Aliyun.OTS.DataModel;
-using Aliyun.OTS.Response;
-using Aliyun.OTS.Request;
 
 
 namespace Aliyun.OTS.UnitTest.DataModel
@@ -42,16 +29,20 @@ namespace Aliyun.OTS.UnitTest.DataModel
         {
             var targetString = new string('X', 10);
 
-            var primaryKey = new PrimaryKey();
-            primaryKey.Add("PK0", new ColumnValue(targetString));
-            primaryKey.Add("PK1", new ColumnValue("ABC"));
-            primaryKey.Add("PK2", new ColumnValue(123));
-            primaryKey.Add("PK3", new ColumnValue(456));
+            var primaryKey = new PrimaryKey
+            {
+                { "PK0", new ColumnValue(targetString) },
+                { "PK1", new ColumnValue("ABC") },
+                { "PK2", new ColumnValue(123) },
+                { "PK3", new ColumnValue(456) }
+            };
 
-            var attribute = new AttributeColumns();
-            attribute.Add("Col0", new ColumnValue(targetString));
+            var attribute = new AttributeColumns
+            {
+                { "Col0", new ColumnValue(targetString) }
+            };
 
-            SetTestConext(primaryKey: primaryKey, attribute: attribute);
+            SetTestConext(primaryKey:primaryKey, attribute:attribute);
             TestAllDataAPI();
         }
 
@@ -63,16 +54,20 @@ namespace Aliyun.OTS.UnitTest.DataModel
         {
             string targetString = "中文字符";
 
-            var primaryKey = new PrimaryKey();
-            primaryKey.Add("PK0", new ColumnValue(targetString));
-            primaryKey.Add("PK1", new ColumnValue("ABC"));
-            primaryKey.Add("PK2", new ColumnValue(123));
-            primaryKey.Add("PK3", new ColumnValue(456));
+            var primaryKey = new PrimaryKey
+            {
+                { "PK0", new ColumnValue(targetString) },
+                { "PK1", new ColumnValue("ABC") },
+                { "PK2", new ColumnValue(123) },
+                { "PK3", new ColumnValue(456) }
+            };
 
-            var attribute = new AttributeColumns();
-            attribute.Add("Col0", new ColumnValue(targetString));
+            var attribute = new AttributeColumns
+            {
+                { "Col0", new ColumnValue(targetString) }
+            };
 
-            SetTestConext(primaryKey: primaryKey, attribute: attribute);
+            SetTestConext(primaryKey:primaryKey, attribute:attribute);
             TestAllDataAPI();
         }
 
@@ -84,16 +79,20 @@ namespace Aliyun.OTS.UnitTest.DataModel
         {
             string targetString = "";
 
-            var primaryKey = new PrimaryKey();
-            primaryKey.Add("PK0", new ColumnValue(targetString));
-            primaryKey.Add("PK1", new ColumnValue("ABC"));
-            primaryKey.Add("PK2", new ColumnValue(123));
-            primaryKey.Add("PK3", new ColumnValue(456));
+            var primaryKey = new PrimaryKey
+            {
+                { "PK0", new ColumnValue(targetString) },
+                { "PK1", new ColumnValue("ABC") },
+                { "PK2", new ColumnValue(123) },
+                { "PK3", new ColumnValue(456) }
+            };
 
-            var attribute = new AttributeColumns();
-            attribute.Add("Col0", new ColumnValue(targetString));
+            var attribute = new AttributeColumns
+            {
+                { "Col0", new ColumnValue(targetString) }
+            };
 
-            SetTestConext(primaryKey: primaryKey, attribute: attribute);
+            SetTestConext(primaryKey:primaryKey, attribute:attribute);
             TestAllDataAPI();
         }
 
@@ -105,25 +104,29 @@ namespace Aliyun.OTS.UnitTest.DataModel
         {
             string targetString = new string('X', 1024 * 1024);
 
-            var primaryKey = new PrimaryKey();
-            primaryKey.Add("PK0", new ColumnValue(targetString));
-            primaryKey.Add("PK1", new ColumnValue("ABC"));
-            primaryKey.Add("PK2", new ColumnValue(123));
-            primaryKey.Add("PK3", new ColumnValue(456));
+            var primaryKey = new PrimaryKey
+            {
+                { "PK0", new ColumnValue(targetString) },
+                { "PK1", new ColumnValue("ABC") },
+                { "PK2", new ColumnValue(123) },
+                { "PK3", new ColumnValue(456) }
+            };
 
-            var attribute = new AttributeColumns();
-            attribute.Add("Col0", new ColumnValue(targetString));
+            var attribute = new AttributeColumns
+            {
+                { "Col0", new ColumnValue(targetString) }
+            };
 
             SetTestConext(
-                primaryKey: primaryKey,
-                attribute: attribute,
-                startPrimaryKey: primaryKey,
-                endPrimaryKey: primaryKey,
-                allFailedMessage: "The length of primary key column: 'PK0' exceeded the MaxLength:1024 with CurrentLength:1048576.");
+                primaryKey:primaryKey, 
+                attribute:attribute,
+                startPrimaryKey:primaryKey,
+                endPrimaryKey:primaryKey,
+                allFailedMessage:"The length of primary key column: 'PK0' exceeds the MaxLength:1024 with CurrentLength:1048576.");
             TestAllDataAPI(false);
         }
 
-        byte[] generateBinaryString(long length)
+        byte[] GenerateBinaryString(long length)
         {
             byte[] ret = new byte[length];
 
@@ -141,9 +144,11 @@ namespace Aliyun.OTS.UnitTest.DataModel
         [Test]
         public void TestNormalBinaryValue()
         {
-            var attribute = new AttributeColumns();
-            attribute.Add("Col0", new ColumnValue(generateBinaryString(10)));
-            SetTestConext(attribute: attribute);
+            var attribute = new AttributeColumns
+            {
+                { "Col0", new ColumnValue(GenerateBinaryString(10)) }
+            };
+            SetTestConext(attribute:attribute);
             TestAllDataAPI();
         }
 
@@ -153,9 +158,11 @@ namespace Aliyun.OTS.UnitTest.DataModel
         [Test]
         public void TestEmptyBinaryValue()
         {
-            var attribute = new AttributeColumns();
-            attribute.Add("Col0", new ColumnValue(generateBinaryString(0)));
-            SetTestConext(attribute: attribute);
+            var attribute = new AttributeColumns
+            {
+                { "Col0", new ColumnValue(GenerateBinaryString(0)) }
+            };
+            SetTestConext(attribute:attribute);
             TestAllDataAPI();
         }
 
@@ -166,11 +173,13 @@ namespace Aliyun.OTS.UnitTest.DataModel
         public void TestBinaryValueTooLong()
         {
             CreateTestTableWith4PK();
-            var attribute = new AttributeColumns();
-            attribute.Add("Col0", new ColumnValue(generateBinaryString(1024 * 1024 * 3)));
+            var attribute = new AttributeColumns
+            {
+                { "Col0", new ColumnValue(GenerateBinaryString(1024 * 1024 * 1024)) }
+            };
 
-            SetTestConext(attribute: attribute,
-               allFailedMessage: "The length of attribute column: 'Col0' exceeded the MaxLength:2097152 with CurrentLength:3145728.");
+            SetTestConext(attribute:attribute,
+               allFailedMessage:"The length of attribute column: 'Col0' exceeds the MaxLength:65536 with CurrentLength:1048576.");
             TestAllDataAPIWithColumnValue(false);
         }
 
@@ -180,17 +189,21 @@ namespace Aliyun.OTS.UnitTest.DataModel
         [Test]
         public void TestNormalIntegerValue()
         {
-            var primaryKey = new PrimaryKey();
-            primaryKey.Add("PK0", new ColumnValue("ABC"));
-            primaryKey.Add("PK1", new ColumnValue("DEF"));
-            primaryKey.Add("PK2", new ColumnValue(10));
-            primaryKey.Add("PK3", new ColumnValue(456));
-            SetTestConext(primaryKey: primaryKey);
+            var primaryKey = new PrimaryKey
+            {
+                { "PK0", new ColumnValue("ABC") },
+                { "PK1", new ColumnValue("DEF") },
+                { "PK2", new ColumnValue(10) },
+                { "PK3", new ColumnValue(456) }
+            };
+            SetTestConext(primaryKey:primaryKey);
             TestAllDataAPI();
 
-            var attribute = new AttributeColumns();
-            attribute.Add("Col0", new ColumnValue(10));
-            SetTestConext(attribute: attribute);
+            var attribute = new AttributeColumns
+            {
+                { "Col0", new ColumnValue(10) }
+            };
+            SetTestConext(attribute:attribute);
             TestAllDataAPI();
         }
 
@@ -200,30 +213,38 @@ namespace Aliyun.OTS.UnitTest.DataModel
         [Test]
         public void TestIntegerValueInBoundary()
         {
-            var primaryKey = new PrimaryKey();
-            primaryKey.Add("PK0", new ColumnValue("ABC"));
-            primaryKey.Add("PK1", new ColumnValue("DEF"));
-            primaryKey.Add("PK2", new ColumnValue(Int64.MaxValue));
-            primaryKey.Add("PK3", new ColumnValue(456));
-            SetTestConext(primaryKey: primaryKey);
+            var primaryKey = new PrimaryKey
+            {
+                { "PK0", new ColumnValue("ABC") },
+                { "PK1", new ColumnValue("DEF") },
+                { "PK2", new ColumnValue(Int64.MaxValue) },
+                { "PK3", new ColumnValue(456) }
+            };
+            SetTestConext(primaryKey:primaryKey);
             TestAllDataAPI();
 
-            var attribute = new AttributeColumns();
-            attribute.Add("Col0", new ColumnValue(Int64.MaxValue));
-            SetTestConext(attribute: attribute);
+            var attribute = new AttributeColumns
+            {
+                { "Col0", new ColumnValue(Int64.MaxValue) }
+            };
+            SetTestConext(attribute:attribute);
             TestAllDataAPI();
 
-            primaryKey = new PrimaryKey();
-            primaryKey.Add("PK0", new ColumnValue("ABC"));
-            primaryKey.Add("PK1", new ColumnValue("DEF"));
-            primaryKey.Add("PK2", new ColumnValue(Int64.MinValue));
-            primaryKey.Add("PK3", new ColumnValue(456));
-            SetTestConext(primaryKey: primaryKey);
+            primaryKey = new PrimaryKey
+            {
+                { "PK0", new ColumnValue("ABC") },
+                { "PK1", new ColumnValue("DEF") },
+                { "PK2", new ColumnValue(Int64.MinValue) },
+                { "PK3", new ColumnValue(456) }
+            };
+            SetTestConext(primaryKey:primaryKey);
             TestAllDataAPI();
 
-            attribute = new AttributeColumns();
-            attribute.Add("Col0", new ColumnValue(Int64.MinValue));
-            SetTestConext(attribute: attribute);
+            attribute = new AttributeColumns
+            {
+                { "Col0", new ColumnValue(Int64.MinValue) }
+            };
+            SetTestConext(attribute:attribute);
             TestAllDataAPI();
         }
 
@@ -242,14 +263,18 @@ namespace Aliyun.OTS.UnitTest.DataModel
         [Test]
         public void TestNormalDoubleValue()
         {
-            var attribute = new AttributeColumns();
-            attribute.Add("Col0", new ColumnValue(3.1415926));
-            SetTestConext(attribute: attribute);
+            var attribute = new AttributeColumns
+            {
+                { "Col0", new ColumnValue(3.1415926) }
+            };
+            SetTestConext(attribute:attribute);
             TestAllDataAPI();
 
-            attribute = new AttributeColumns();
-            attribute.Add("Col0", new ColumnValue(3.1415926));
-            SetTestConext(attribute: attribute);
+            attribute = new AttributeColumns
+            {
+                { "Col0", new ColumnValue(3.1415926) }
+            };
+            SetTestConext(attribute:attribute);
             TestAllDataAPI();
         }
 
@@ -257,16 +282,20 @@ namespace Aliyun.OTS.UnitTest.DataModel
         // 测试DoubleValue的值为8位有符号浮点数的最小值或最大值的情况
         // </summary>
         [Test]
-        public void TestDoubleValueInBoundary()
+        public void TestDoubleValueInBoundary() 
         {
-            var attribute = new AttributeColumns();
-            attribute.Add("Col0", new ColumnValue(double.MaxValue));
-            SetTestConext(attribute: attribute);
+            var attribute = new AttributeColumns
+            {
+                { "Col0", new ColumnValue(double.MaxValue) }
+            };
+            SetTestConext(attribute:attribute);
             TestAllDataAPI();
 
-            attribute = new AttributeColumns();
-            attribute.Add("Col0", new ColumnValue(double.MinValue));
-            SetTestConext(attribute: attribute);
+            attribute = new AttributeColumns
+            {
+                { "Col0", new ColumnValue(double.MinValue) }
+            };
+            SetTestConext(attribute:attribute);
             TestAllDataAPI();
         }
 
@@ -277,15 +306,19 @@ namespace Aliyun.OTS.UnitTest.DataModel
         public void TestDoubleValueOutOfBoundary()
         {
             CreateTestTableWith4PK();
-            var attribute = new AttributeColumns();
-            attribute.Add("Col0", new ColumnValue(double.MaxValue * 1.1));
-            SetTestConext(attribute: attribute, allFailedMessage: "Infinity can't be set to double value.");
-            TestAllDataAPIWithColumnValue(createTable: false);
+            var attribute = new AttributeColumns
+            {
+                { "Col0", new ColumnValue(double.MaxValue * 1.1) }
+            };
+            SetTestConext(attribute:attribute, allFailedMessage:"Infinity can't be set to double value.");
+            TestAllDataAPIWithColumnValue(createTable:false);
 
-            attribute = new AttributeColumns();
-            attribute.Add("Col0", new ColumnValue(double.MinValue * 1.1));
-            SetTestConext(attribute: attribute, allFailedMessage: "Infinity can't be set to double value.");
-            TestAllDataAPIWithColumnValue(createTable: false);
+            attribute = new AttributeColumns
+            {
+                { "Col0", new ColumnValue(double.MinValue * 1.1) }
+            };
+            SetTestConext(attribute:attribute, allFailedMessage:"Infinity can't be set to double value.");
+            TestAllDataAPIWithColumnValue(createTable:false);
         }
 
         // <summary>
@@ -294,9 +327,11 @@ namespace Aliyun.OTS.UnitTest.DataModel
         [Test]
         public void TestBooleanValueTrue()
         {
-            var attribute = new AttributeColumns();
-            attribute.Add("Col0", new ColumnValue(true));
-            SetTestConext(attribute: attribute);
+            var attribute = new AttributeColumns
+            {
+                { "Col0", new ColumnValue(true) }
+            };
+            SetTestConext(attribute:attribute);
             TestAllDataAPI();
         }
 
@@ -304,11 +339,13 @@ namespace Aliyun.OTS.UnitTest.DataModel
         // 测试布尔值为False的情况。
         // </summary>
         [Test]
-        public void TestBooleanValueFalse()
+        public void TestBooleanValueFalse() 
         {
-            var attribute = new AttributeColumns();
-            attribute.Add("Col0", new ColumnValue(false));
-            SetTestConext(attribute: attribute);
+            var attribute = new AttributeColumns
+            {
+                { "Col0", new ColumnValue(false) }
+            };
+            SetTestConext(attribute:attribute);
             TestAllDataAPI();
         }
 
@@ -319,15 +356,19 @@ namespace Aliyun.OTS.UnitTest.DataModel
         public void TestInvalidValueType()
         {
             CreateTestTableWith4PK();
-            var attribute = new AttributeColumns();
-            attribute.Add("Col0", ColumnValue.INF_MAX);
-            SetTestConext(attribute: attribute, allFailedMessage: "INF_MAX is an invalid type for the attribute column.");
-            TestAllDataAPIWithColumnValue(createTable: false);
+            var attribute = new AttributeColumns
+            {
+                { "Col0", ColumnValue.INF_MAX }
+            };
+            SetTestConext(attribute:attribute, allFailedMessage:"VT_INF_MAX is an invalid type for the attribute column.");
+            TestAllDataAPIWithColumnValue(createTable:false);
 
-            attribute = new AttributeColumns();
-            attribute.Add("Col0", ColumnValue.INF_MIN);
-            SetTestConext(attribute: attribute, allFailedMessage: "INF_MIN is an invalid type for the attribute column.");
-            TestAllDataAPIWithColumnValue(createTable: false);
+            attribute = new AttributeColumns
+            {
+                { "Col0", ColumnValue.INF_MIN }
+            };
+            SetTestConext(attribute:attribute, allFailedMessage:"VT_INF_MIN is an invalid type for the attribute column.");
+            TestAllDataAPIWithColumnValue(createTable:false);
         }
 
         // <summary>

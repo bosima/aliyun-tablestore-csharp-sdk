@@ -96,6 +96,8 @@ namespace Aliyun.OTS.UnitTest.InterfaceTest
         [Test]
         public void TestGetRowWith1000ColumnsToGet() 
         {
+            CreateTestTableWith4PK(new CapacityUnit(0, 0));
+
             var columnsToGet = new HashSet<string>();
             for (int i = 0; i < 1025; i ++) {
                 columnsToGet.Add("Col" + i);

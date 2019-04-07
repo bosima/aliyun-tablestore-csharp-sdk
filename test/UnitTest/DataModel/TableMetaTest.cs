@@ -80,13 +80,14 @@ namespace Aliyun.OTS.UnitTest.DataModel
             SetTestConext(pkSchema:primaryKeySchema, allFailedMessage:"BOOLEAN is an invalid type for the primary key.");
             TestSingleAPI("CreateTable");
 
-            primaryKeySchema = new PrimaryKeySchema
-            {
-                { "PK0", ColumnValueType.Binary },
-                { "PK1", ColumnValueType.Binary }
-            };
-            SetTestConext(pkSchema:primaryKeySchema, allFailedMessage:"BINARY is an invalid type for the primary key.");
-            TestSingleAPI("CreateTable");
+            // 当前是允许的
+            //primaryKeySchema = new PrimaryKeySchema
+            //{
+            //    { "PK0", ColumnValueType.Binary },
+            //    { "PK1", ColumnValueType.Binary }
+            //};
+            //SetTestConext(pkSchema:primaryKeySchema, allFailedMessage:"BINARY is an invalid type for the primary key.");
+            //TestSingleAPI("CreateTable");
             
             // INF_MIN INF_MAX 类型的 ColumnValueType 在C# SDK里没有
         }

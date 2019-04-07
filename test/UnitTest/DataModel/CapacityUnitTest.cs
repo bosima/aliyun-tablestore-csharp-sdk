@@ -110,12 +110,12 @@ namespace Aliyun.OTS.UnitTest.DataModel
 
             WaitForTableReady();
             TestSingleAPI("DescribeTable");
-            
-           // WaitBeforeUpdateTable();
-           // SetTestConext(reservedThroughput: new CapacityUnit(read: 1));
-           // TestSingleAPI("UpdateTable");
-            
+
+            WaitForTableUpdateFrequency();
             SetTestConext(reservedThroughput: new CapacityUnit(1, 0));
+            TestSingleAPI("UpdateTable");
+          
+            //SetTestConext(reservedThroughput: new CapacityUnit(1, 0));
             TestSingleAPI("DescribeTable");
         }
 
@@ -130,12 +130,12 @@ namespace Aliyun.OTS.UnitTest.DataModel
             
             WaitForTableReady();
             TestSingleAPI("DescribeTable");
-            
-           // WaitBeforeUpdateTable();
-           // SetTestConext(reservedThroughput: new CapacityUnit(write: 1));
-           // TestSingleAPI("UpdateTable");
-            
+
+            WaitForTableUpdateFrequency();
             SetTestConext(reservedThroughput: new CapacityUnit(0, 1));
+            TestSingleAPI("UpdateTable");
+
+            //SetTestConext(reservedThroughput: new CapacityUnit(0, 1));
             TestSingleAPI("DescribeTable");
         }
 

@@ -117,6 +117,16 @@ namespace Aliyun.OTS.UnitTest.DataModel
                 { "Col0", new ColumnValue(targetString) }
             };
 
+            try
+            {
+                SetTestConext();
+                TestSingleAPI("CreateTable");
+            }
+            catch (OTSServerException ex)
+            {
+                Console.WriteLine(ex.ErrorMessage);
+            }
+
             SetTestConext(
                 primaryKey:primaryKey, 
                 attribute:attribute,

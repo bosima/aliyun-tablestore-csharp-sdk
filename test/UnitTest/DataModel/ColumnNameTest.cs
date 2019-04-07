@@ -9,16 +9,16 @@
  *
  */
 
+using Aliyun.OTS.DataModel;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using NUnit.Framework;
-using Aliyun.OTS.DataModel;
 
 namespace Aliyun.OTS.UnitTest.DataModel
 {
 
     [TestFixture]
-    class ColumnNameTest : OTSUnitTestBase
+    internal class ColumnNameTest : OTSUnitTestBase
     {
         public void TestBadColumnName(string badColumnName)
         {
@@ -58,9 +58,19 @@ namespace Aliyun.OTS.UnitTest.DataModel
                 allFailedMessage: errorMessage);
             TestAllDataAPI(deleteTable: false);
 
+            try
+            {
+                SetTestConext();
+                TestSingleAPI("CreateTable");
+            }
+            catch (OTSServerException ex)
+            {
+                Console.WriteLine(ex.ErrorMessage);
+            }
+
             SetTestConext(
-                attribute: badAttribute,
-                allFailedMessage: expectFailureInfo);
+               attribute: badAttribute,
+               allFailedMessage: expectFailureInfo);
             TestAllDataAPIWithAttribute(false);
 
             SetTestConext(
@@ -69,30 +79,31 @@ namespace Aliyun.OTS.UnitTest.DataModel
                 allFailedMessage: expectFailureInfo);
             TestAllDataAPIWithColumnsToGet();
         }
-        
-        // <summary>
-        // 测试所有接口，列名长度为0的情况，期望返回错误消息：Invalid column name: '{ColumnName}'. 中包含的ColumnName与输入一致。
-        // </summary>
+
+        /// <summary>
+        /// 测试所有接口，列名长度为0的情况，期望返回错误消息：Invalid column name: '{ColumnName}'. 中包含的ColumnName与输入一致。
+        /// </summary>
         [Test]
-        public void TestColumnNameOfZeroLength() 
+        public void TestColumnNameOfZeroLength()
         {
             TestBadColumnName("");
         }
 
-        //// <summary>
-        //// 测试所有接口，列名包含Unicode，期望返回错误信息：Invalid column name: '{ColumnName}'. 中包含的ColumnName与输入一致。
-        //// </summary>
+        // 实际支持中文
+        ///// <summary>
+        ///// 测试所有接口，列名包含Unicode，期望返回错误信息：Invalid column name: '{ColumnName}'. 中包含的ColumnName与输入一致。
+        ///// </summary>
         //[Test]
-        //public void TestColumnNameWithUnicode() 
+        //public void TestColumnNameWithUnicode()
         //{
         //    TestBadColumnName("中文");
         //}
 
-        // <summary>
-        // 测试所有接口，列名长度为1KB，期望返回错误信息：Invalid column name: '{ColumnName}'. 中包含的ColumnName与输入一致。
-        // </summary>
+        /// <summary>
+        /// 测试所有接口，列名长度为1KB，期望返回错误信息：Invalid column name: '{ColumnName}'. 中包含的ColumnName与输入一致。
+        /// </summary>
         [Test]
-        public void Test1KBColumnName() 
+        public void Test1KBColumnName()
         {
             TestBadColumnName(new string('X', 1024));
         }

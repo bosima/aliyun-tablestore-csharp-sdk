@@ -98,23 +98,23 @@ namespace Aliyun.OTS.UnitTest.RetryPolicyTest
                                      "Too frequent table operations.");
 
             TestRetryWithException(new OTSServerException[] { e1, e1, e1, e1 });
-            AssertRetryDelay(0, 250, 500);
-            AssertRetryDelay(1, 500, 1000);
-            AssertRetryDelay(2, 1000, 2000);
+            AssertRetryDelay(0, 249, 500);
+            AssertRetryDelay(1, 499, 1000);
+            AssertRetryDelay(2, 999, 2000);
             OTSClientTestHelper.Reset();
             OTSClientTestHelper.TurnOnRetryTimesAndBackOffRecording();
 
             TestRetryWithException(new OTSServerException[] { e2, e2, e2, e2 });
-            AssertRetryDelay(0, 250, 500);
-            AssertRetryDelay(1, 500, 1000);
-            AssertRetryDelay(2, 1000, 2000);
+            AssertRetryDelay(0, 249, 500);
+            AssertRetryDelay(1, 499, 1000);
+            AssertRetryDelay(2, 999, 2000);
             OTSClientTestHelper.Reset();
             OTSClientTestHelper.TurnOnRetryTimesAndBackOffRecording();
 
             TestRetryWithException(new OTSServerException[] { e3, e3, e3, e3 });
-            AssertRetryDelay(0, 250, 500);
-            AssertRetryDelay(1, 500, 1000);
-            AssertRetryDelay(2, 1000, 2000);
+            AssertRetryDelay(0, 249, 500);
+            AssertRetryDelay(1, 499, 1000);
+            AssertRetryDelay(2, 999, 2000);
             OTSClientTestHelper.Reset();
 
         }
@@ -131,22 +131,23 @@ namespace Aliyun.OTS.UnitTest.RetryPolicyTest
                                             HttpStatusCode.ServiceUnavailable,
                                             "OTSRowOperationConflict",
                                             "Data is being modified by the other request.");
+
             var e2 = new OTSServerException("/ListTable",
                                      HttpStatusCode.ServiceUnavailable,
                                      "OTSTimeout",
                                      "Operation timeout.");
 
             TestRetryWithException(new OTSServerException[] { e1, e1, e1, e1 });
-            AssertRetryDelay(0, 100, 200);
-            AssertRetryDelay(1, 200, 400);
-            AssertRetryDelay(2, 400, 800);
+            AssertRetryDelay(0, 99, 200);
+            AssertRetryDelay(1, 199, 400);
+            AssertRetryDelay(2, 399, 800);
             OTSClientTestHelper.Reset();
             OTSClientTestHelper.TurnOnRetryTimesAndBackOffRecording();
 
             TestRetryWithException(new OTSServerException[] { e2, e2, e2, e2 });
-            AssertRetryDelay(0, 100, 200);
-            AssertRetryDelay(1, 200, 400);
-            AssertRetryDelay(2, 400, 800);
+            AssertRetryDelay(0, 99, 200);
+            AssertRetryDelay(1, 199, 400);
+            AssertRetryDelay(2, 399, 800);
             OTSClientTestHelper.Reset();
             OTSClientTestHelper.TurnOnRetryTimesAndBackOffRecording();
         }
@@ -171,21 +172,21 @@ namespace Aliyun.OTS.UnitTest.RetryPolicyTest
                                      "Too frequent table operations.");
 
             TestRetry(new OTSServerException[] { e1, e1 });
-            AssertRetryDelay(0, 100, 200);
-            AssertRetryDelay(1, 200, 400);
+            AssertRetryDelay(0, 99, 200);
+            AssertRetryDelay(1, 199, 400);
             OTSClientTestHelper.Reset();
             OTSClientTestHelper.TurnOnRetryTimesAndBackOffRecording();
 
             TestRetry(new OTSServerException[] { e2, e2 });
-            AssertRetryDelay(0, 100, 200);
-            AssertRetryDelay(1, 200, 400);
+            AssertRetryDelay(0, 99, 200);
+            AssertRetryDelay(1, 199, 400);
             OTSClientTestHelper.Reset();
             OTSClientTestHelper.TurnOnRetryTimesAndBackOffRecording();
 
 
             TestRetry(new OTSServerException[] { e3, e3, e3 });
-            AssertRetryDelay(0, 250, 500);
-            AssertRetryDelay(1, 500, 1000);
+            AssertRetryDelay(0, 249, 500);
+            AssertRetryDelay(1, 499, 1000);
             OTSClientTestHelper.Reset();
 
         }
@@ -205,9 +206,9 @@ namespace Aliyun.OTS.UnitTest.RetryPolicyTest
 
             OTSClientTestHelper.TurnOnRetryTimesAndBackOffRecording();
             TestRetry(new OTSServerException[] { e1, e3, e3 });
-            AssertRetryDelay(0, 100, 200);
-            AssertRetryDelay(1, 500, 1000);
-            AssertRetryDelay(2, 1000, 2000);
+            AssertRetryDelay(0, 99, 200);
+            AssertRetryDelay(1, 499, 1000);
+            AssertRetryDelay(2, 999, 2000);
             OTSClientTestHelper.Reset();
         }
 

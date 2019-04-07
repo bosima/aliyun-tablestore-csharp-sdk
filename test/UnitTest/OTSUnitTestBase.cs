@@ -9,22 +9,22 @@
  *
  */
 
+using Aliyun.OTS.DataModel;
+using Aliyun.OTS.DataModel.ConditionalUpdate;
+using Aliyun.OTS.Request;
+using Aliyun.OTS.Response;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Threading;
-using System.Net;
 using System.IO;
+using System.Net;
 using System.Security.Cryptography;
-using NUnit.Framework;
-using Aliyun.OTS.DataModel;
-using Aliyun.OTS.Response;
-using Aliyun.OTS.Request;
+using System.Threading;
 using PB = com.alicloud.openservices.tablestore.core.protocol;
-using Aliyun.OTS.DataModel.ConditionalUpdate;
 
 namespace Aliyun.OTS.UnitTest
 {
-    class APITestContext
+    internal class APITestContext
     {
         public string tableName;
         public PrimaryKeySchema pkSchema;
@@ -48,14 +48,16 @@ namespace Aliyun.OTS.UnitTest
         public string allFailedMessage;
     }
 
-    class LogToFileHandler : OTSDefaultLogHandler
+    internal class LogToFileHandler : OTSDefaultLogHandler
     {
         private static readonly object logLocker = new object();
 
         public static new void DefaultErrorLogHandler(string message)
         {
+            var logPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log.txt");
+
             var dateString = GetDateTimeString();
-            using (StreamWriter w = File.AppendText("/Users/xiaofeizhao/Downloads/log.txt"))
+            using (StreamWriter w = File.AppendText(logPath))
             {
                 w.Write("OTSClient ERROR {0} {1}", dateString, message);
             }
@@ -63,15 +65,17 @@ namespace Aliyun.OTS.UnitTest
 
         public static new void DefaultDebugLogHandler(string message)
         {
+            var logPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log.txt");
+
             var dateString = GetDateTimeString();
-            using (StreamWriter w = File.AppendText("/Users/xiaofeizhao/Downloads/log.txt"))
+            using (StreamWriter w = File.AppendText(logPath))
             {
                 w.Write("OTSClient DEBUG {0} {1}", dateString, message);
             }
         }
     }
 
-    class OTSUnitTestBase
+    internal class OTSUnitTestBase
     {
         public string TestEndPoint = Test.Config.Endpoint;
         public string TestAccessKeyID = Test.Config.AccessKeyId;
@@ -194,6 +198,11 @@ namespace Aliyun.OTS.UnitTest
             Thread.Sleep(2 * 1000);
         }
 
+        public static void WaitForTableUpdateFrequency()
+        {
+            Thread.Sleep(120 * 1000);
+        }
+
         public static void AssertColumns(Dictionary<string, ColumnValue> expect, Dictionary<string, ColumnValue> actual, HashSet<string> columnsToGet = null)
         {
             if (columnsToGet != null && columnsToGet.Count != 0)
@@ -229,7 +238,7 @@ namespace Aliyun.OTS.UnitTest
 
                 var result = expectItem.CompareTo(actualItem);
 
-                Assert.IsTrue(result ==0, "columnValue Not equal, expect:" + expectItem + ", actual:" + actualItem);
+                Assert.IsTrue(result == 0, "columnValue Not equal, expect:" + expectItem + ", actual:" + actualItem);
             }
         }
 
@@ -608,12 +617,12 @@ namespace Aliyun.OTS.UnitTest
         /// <param name="condition">Condition.</param>
         private CapacityUnit GetDefaultCapacityUnit(Condition condition)
         {
-            if(condition == null)
+            if (condition == null)
             {
                 return new CapacityUnit(0, 1);
             }
 
-            switch(condition.RowExistenceExpect)
+            switch (condition.RowExistenceExpect)
             {
                 case RowExistenceExpectation.IGNORE:
                     return new CapacityUnit(0, 1);
@@ -706,7 +715,7 @@ namespace Aliyun.OTS.UnitTest
                         RowPutChange = new RowPutChange(tableName, primaryKey)
                     };
 
-                    foreach(var attr in attributeForPut.AttributeColumnsToPut)
+                    foreach (var attr in attributeForPut.AttributeColumnsToPut)
                     {
                         request5.RowPutChange.AddColumn(new Column(attr.Key, attr.Value));
                     }
@@ -901,7 +910,7 @@ namespace Aliyun.OTS.UnitTest
                 {
                     Assert.AreEqual(failedMessage, exception.Message);
                 }
-                catch(Exception exception)
+                catch (Exception exception)
                 {
                     Console.WriteLine(exception.Message);
                 }
@@ -981,6 +990,7 @@ namespace Aliyun.OTS.UnitTest
             TestSingleAPI("UpdateRow_Delete");
             TestSingleAPI("BatchWriteRow_Put");
             TestSingleAPI("BatchWriteRow_Update");
+
             if (createTable)
             {
                 TestSingleAPI("DeleteTable");

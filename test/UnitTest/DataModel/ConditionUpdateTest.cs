@@ -31,7 +31,8 @@ namespace Aliyun.OTS.UnitTest.DataModel
         private readonly String tableName;
         private Thread thread;
         readonly Int64 pk;
-        public MyThread(String name, Int64 index)
+        private OTSClient ots;
+        public MyThread(String name, Int64 index,OTSClient ots)
         {
             tableName = name;
             pk = index;

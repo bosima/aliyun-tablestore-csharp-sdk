@@ -64,7 +64,7 @@ namespace Aliyun.OTS.UnitTest
 
                 {
                     var request = new BatchWriteRowRequest();
-                    var change = new RowChanges();
+                    var change = new RowChanges(TestTableName);
                     change.AddPut(new Condition(RowExistenceExpectation.IGNORE), pk1, attr1);
                     change.AddPut(new Condition(RowExistenceExpectation.IGNORE), pk2, attr2);
                     change.AddPut(new Condition(RowExistenceExpectation.IGNORE), pk3, attr3);
@@ -129,7 +129,7 @@ namespace Aliyun.OTS.UnitTest
 
                 {
                     var request = new BatchWriteRowRequest();
-                    var change = new RowChanges();
+                    var change = new RowChanges(TestTableName);
                     change.AddPut(new Condition(RowExistenceExpectation.IGNORE), pk1, attr1);
                     change.AddPut(new Condition(RowExistenceExpectation.IGNORE), pk2, attr2);
                     change.AddPut(new Condition(RowExistenceExpectation.IGNORE), pk3, attr3);
@@ -143,15 +143,15 @@ namespace Aliyun.OTS.UnitTest
 
                     var rows = tables[TestTableName];
 
-                    Assert.AreEqual(3, rows.PutResponses.Count);
+                    Assert.AreEqual(3, rows.Responses.Count);
 
-                    Assert.AreEqual("OTSInvalidPK", rows.PutResponses[0].ErrorCode);
-                    Assert.AreEqual("OTSInvalidPK", rows.PutResponses[1].ErrorCode);
-                    Assert.AreEqual("OTSInvalidPK", rows.PutResponses[2].ErrorCode);
+                    Assert.AreEqual("OTSInvalidPK", rows.Responses[0].ErrorCode);
+                    Assert.AreEqual("OTSInvalidPK", rows.Responses[1].ErrorCode);
+                    Assert.AreEqual("OTSInvalidPK", rows.Responses[2].ErrorCode);
 
-                    Assert.AreEqual("Validate PK size fail. Input: 2, Meta: 1.", rows.PutResponses[0].ErrorMessage);
-                    Assert.AreEqual("Validate PK size fail. Input: 2, Meta: 1.", rows.PutResponses[1].ErrorMessage);
-                    Assert.AreEqual("Validate PK size fail. Input: 2, Meta: 1.", rows.PutResponses[2].ErrorMessage);
+                    Assert.AreEqual("Validate PK size fail. Input: 2, Meta: 1.", rows.Responses[0].ErrorMessage);
+                    Assert.AreEqual("Validate PK size fail. Input: 2, Meta: 1.", rows.Responses[1].ErrorMessage);
+                    Assert.AreEqual("Validate PK size fail. Input: 2, Meta: 1.", rows.Responses[2].ErrorMessage);
 
                 }
             }

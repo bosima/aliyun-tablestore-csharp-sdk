@@ -1,8 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp2.0;net45;</TargetFrameworks>
-    <Version>4.0.0</Version>
+    <TargetFrameworks>net40;netcoreapp2.0</TargetFrameworks>
+    <Version>4.1.1</Version>
     <Authors>Aliyun</Authors>
     <Company>Alibaba Cloud Computing</Company>
     <Description>Aliyun Table Store SDK Test for .NET</Description>
@@ -10,9 +10,9 @@
     <PackageLicenseUrl />
     <PackageProjectUrl />
     <RepositoryUrl />
-    <PackageReleaseNotes>Support .net  4.5 and .net standard 2.0.</PackageReleaseNotes>
-    <AssemblyVersion>4.0.0</AssemblyVersion>
-    <FileVersion>4.0.0</FileVersion>
+    <PackageReleaseNotes>Support .net  4.0 and .net standard 2.0.</PackageReleaseNotes>
+    <AssemblyVersion>4.1.1</AssemblyVersion>
+    <FileVersion>4.1.1</FileVersion>
     <RepositoryType />
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <PackageId>Aliyun.TableStore.Test</PackageId>
@@ -21,7 +21,7 @@
     <RootNamespace>Aliyun.OTS.Test</RootNamespace>
   </PropertyGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net40' ">
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
@@ -31,9 +31,11 @@
   <ItemGroup>
     <None Remove="packages.config" />
   </ItemGroup>
-  <ItemGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.0' ">
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.8.0" />
-    <PackageReference Include="NUnit" Version="3.10.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="NUnit" Version="3.10.1" />  
     <PackageReference Include="NUnit3TestAdapter" Version="3.10.0" />
   </ItemGroup>
   <ItemGroup>

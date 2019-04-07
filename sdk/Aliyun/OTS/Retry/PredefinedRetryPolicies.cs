@@ -17,7 +17,7 @@ namespace Aliyun.OTS.Retry
 {
     public class DefaultRetryPolicy : RetryPolicy
     {
-        public static int MaxRetryTimes = 3;
+        public int MaxRetryTimes = 3;
         
         private int MaxDelay = 2000;
         

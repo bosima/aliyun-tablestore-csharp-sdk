@@ -22,22 +22,6 @@ namespace Aliyun.OTS.DataModel
         /// <summary>
         /// 表示多个Put操作。
         /// </summary>
-        public List<Tuple<Condition, PrimaryKey, AttributeColumns>> PutOperations { get; set; }
-        
-        /// <summary>
-        /// 表示多个Update操作。
-        /// </summary>
-        public List<Tuple<Condition, PrimaryKey, UpdateOfAttribute>> UpdateOperations { get; set; }
-        
-        /// <summary>
-        /// 表示多个Delete操作。
-        /// </summary>
-        public List<Tuple<Condition, PrimaryKey>> DeleteOperations { get; set;}
-
-
-        /// <summary>
-        /// 表示多个Put操作。
-        /// </summary>
         public List<RowPutChange> RowPutChanges;
 
         /// <summary>
